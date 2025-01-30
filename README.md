@@ -1,7 +1,9 @@
 # FOSS-Astro-Heater
 
 ## Overview
-The **FOSS-Astro-Heater** is an **open-source ESP32-based dew heater controller** designed for astrophotography and similar applications. This project was created as a response to Astronomy and Optics companies absurd prices for similar products. At time of writing, the `Celestron Dew Heater` and `PegasusAstro Pocket Powerbox Micro` are each ~$250. To be clear, I don't believe these are bad companies but I want to provide an alternative for those of us who only need a single dew heater coil with basic functionality.
+The **FOSS-Astro-Heater** is an **open-source ESP32-based dew heater controller** designed for astrophotography and similar applications. This project was created as a response to the absurd prices Astronomy and Optics companies charge for similar products.
+
+At time of writing, the _Celestron Dew Heater_ and _PegasusAstro Pocket Powerbox Micro_ are each ~$250. To be clear, I don't believe these are bad companies but I want to provide an alternative for those of us who only need a single dew heater coil with basic functionality.
 
 ## Features
 - **Temperature Control:** Reads current temperature from a DS18B20 sensor and compares it to the user-set target.
