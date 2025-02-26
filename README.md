@@ -1,4 +1,5 @@
-# Overview
+# Astro Heater
+## Overview
 This is a dew heater running open source firmware. 
 
 Personally, I'm sick of seeing companies charge $300+ (USD, yes really) for basic dew heaters and then have the audacity to lock the user into their proprietary software — so I made my own.
@@ -6,7 +7,7 @@ Personally, I'm sick of seeing companies charge $300+ (USD, yes really) for basi
 This dew heater takes user input from a dial and keeps the heater band at a contant temperature (typically withing +/-3 degrees f). There are future plans to expand this functionality, see **Potential Features** below.
 
 
-# Parts List
+## Parts List
 | Component                     | Details |
 |--------------------------------|---------|
 | **ESP32 WROOM**               | I used a 38-pin dev board from DORHEA |
@@ -22,7 +23,7 @@ This dew heater takes user input from a dial and keeps the heater band at a cont
 
 
 
-# Assembly
+## Assembly
 Assemble the pieces on a breadboard or blank PCB using the below wiring:
 
 | Component          | Wiring  |
@@ -40,17 +41,23 @@ Assemble the pieces on a breadboard or blank PCB using the below wiring:
 Note: *All GPIO pins refer to the ESP32*
 
 
-# Installation
-1. Clone repo or download `firmware.ino` to your computer
-2. Open file in `Arduino IDE` and connect ESP32
-    - **Note:** The screens will not function properly unless you use **esp32 board manager `version 2.0.14`** Later versions of the board manager include I2C breaking code.
-3. Install all included libraries to your IDE (find libraries at top of `firmware.ino`)
-4. Compile and Upload firmware to your ESP32
+### Installation
+
+1. **Clone or Download:**  
+   Clone this repository or download `firmware.ino` to your computer.
+2. **Open in Arduino IDE:**  
+   - Open `firmware.ino` in the Arduino IDE.
+   - Connect your ESP32 board.
+   - **Important:** Use **ESP32 Board Manager version 2.0.14**. Later versions may contain I2C issues affecting the OLED displays.
+3. **Install Libraries:**  
+   Ensure all libraries referenced at the top of `firmware.ino` are installed in your Arduino IDE.
+4. **Compile and Upload:**  
+   Compile and upload the firmware to your ESP32.
 
 
-# Usage
+## Usage
 
-## Basic Use
+### Basic Operation
 Wrap the heater band around your scope, placing the temperature probe inside the band touching the scope body.
 
 Power on your dew heater by plugging it into a 5V 2A USB source — the screens should illuminate. After the splash screen, you may select a target temperature with the pot from 0-100°f. 
@@ -59,13 +66,13 @@ The heater will being to warm until the temp probe reaches the target temperatur
 
 Screen 2 (0x3D) will output a graph to show temp probe readings and heater state for the last 30min.
 
-## Locking Target Temp
+### Locking Target Temp
 Depending on your specific setup, the potentiometer reading may fluctuate as the heater is drawing power and the temp probe is reading within 0-4° of the target. If this is the case, use the button to lockout the pot once you have selected your target temp.
 
 To change the target temp, press the lockout button again to toggle the lock.
 
 
-# FAQ
+## FAQ
 
 <details>
   <summary><strong>Really? $300 for a Proprietary Dew Heater??</strong></summary>
@@ -121,22 +128,24 @@ To change the target temp, press the lockout button again to toggle the lock.
 </details>
 <br>
 
-# Potential Features and Fixes
 
-## WiFi Integration
-Add WiFi support to view board stats remotely.
+## Potential Features & Fixes
 
-## Support for Ambient Temperature and Humidity Sensors
-Add support for additional sensors to display ambient temp and humidity. Show calculated dew point so user doesn't have to do the math themself.
+- **WiFi Integration:**  
+  Enable remote monitoring of board statistics.
 
-## Automatic Mode
-Use the additional sensors to automatically adjust the target temp based on dew point.
+- **Ambient Temperature and Humidity Sensors:**  
+  Support additional sensors to display ambient conditions and calculate dew point.
 
-## Settings Menu
-Add a settings menu to change defaults, view IP address, toggle wifi, etc.
+- **Automatic Mode:**  
+  Automatically adjust the target temperature based on sensor data.
 
-## Error Handling
-Current code returns an error when the temp probe is not connected or probe is misread. In an error state, heater is automatically on. Add toggle to adjust default heater state.
+- **Settings Menu:**  
+  Include a settings menu to adjust defaults, view IP addresses, toggle WiFi, etc.
 
-# Troubleshooting
+- **Error Handling:**  
+  Current code returns an error when the temp probe is not connected or probe is misread. In an error state, heater is automatically on. Add toggle to adjust default heater state.
+
+
+## Troubleshooting
 Troubleshooting steps to be added as discovered
