@@ -148,4 +148,4 @@ To change the target temp, press the lockout button again to toggle the lock.
 
 
 ## Troubleshooting
-Troubleshooting steps to be added as discovered
+*Troubleshooting steps will be added as issues are identified.*
