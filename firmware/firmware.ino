@@ -32,18 +32,16 @@
  #include <WiFi.h>
  #include <WebServer.h>
  
- // ---------------------------------------------------------------------
- // WIFI CREDENTIALS - EDIT THESE
- // ---------------------------------------------------------------------
+
+ // WIFI CREDENTIALS - EDIT THESE 
  const char* ssid     = "YOUR_SSID";
  const char* password = "YOUR_PASSWORD";
  
+
  // Create the WebServer on port 80
  WebServer server(80);
  
- // ---------------------------------------------------------------------
  // OLED SETUP
- // ---------------------------------------------------------------------
  #define SCREEN_WIDTH 128
  #define SCREEN_HEIGHT 64
  #define OLED_RESET    -1 // Use -1 if no reset pin
@@ -53,25 +51,18 @@
  // Second OLED at address 0x3D (shows the graph/history)
  Adafruit_SSD1306 display2(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET);
  
- // ---------------------------------------------------------------------
  // PINS
- // ---------------------------------------------------------------------
  #define POT_PIN      34  // ADC input from potentiometer (for live target temperature)
  #define ONE_WIRE_BUS 4   // DS18B20 data line (temperature sensor)
  #define HEATER_PIN   26  // Output to control MOSFET that switches the heater
  #define BUTTON_1   13  // Button used to toggle lock/unlock mode
  #define BUTTON_2 12 // Used to toggle auto mode
  
- // ---------------------------------------------------------------------
  // DS18B20 SETUP
- // ---------------------------------------------------------------------
  OneWire oneWire(ONE_WIRE_BUS);            // Initialize OneWire on the defined pin
  DallasTemperature sensors(&oneWire);      // Pass OneWire to the DallasTemperature library
  
- // ---------------------------------------------------------------------
  // 6-HOUR HISTORY (1080 points => 6hr, 1 every 20s)
- // We'll only show last 30 min = 90 points on OLED #2
- // ---------------------------------------------------------------------
  static const int HISTORY_LEN       = 1080; 
  static const int OLED_HISTORY_LEN  = 90;   // Last 30 minutes
  
@@ -89,7 +80,6 @@
  // For button debouncing (to detect state changes)
  static bool lastButtonState = true;
  
- // --- SHT30 object ---
  // Object for the SHT30 sensor that reads ambient temperature and humidity.
  Adafruit_SHT31 sht3x = Adafruit_SHT31();
  
@@ -106,9 +96,8 @@
  bool enableWifi = false;
  
  
- // ---------------------------------------------------------------------
+
  // Draw text center with a box on the OLED display
- // ---------------------------------------------------------------------
  void drawTextCenterWithBox(Adafruit_SSD1306 &disp, int16_t y, const char *text, uint8_t size)
  {
    disp.setTextSize(size);
@@ -126,9 +115,9 @@
    disp.print(text);
  }
  
- // ---------------------------------------------------------------------
+
+
  // STAR FIELD (for splash animation)
- // ---------------------------------------------------------------------
  #define NUM_STARS 30
  static int starX[NUM_STARS]; // X coordinates for stars
  static int starY[NUM_STARS]; // Y coordinates for stars
@@ -144,7 +133,8 @@
  }
  
  
- // Draw star field and optional splash text on a display
+
+ // Draw star field and splash text on a display
  void drawStarsAndSplash(Adafruit_SSD1306 &disp, bool drawSplash, int offset)
  {
    disp.clearDisplay();
@@ -167,7 +157,9 @@
    }
  }
  
- // A similar splash function for the second OLED with different text
+
+
+ // Second OLED splash function
  void drawStarsAndSplash2(Adafruit_SSD1306 &disp, bool drawSplash, int offset)
  {
    disp.clearDisplay();
@@ -186,9 +178,9 @@
    }
  }
  
- // ---------------------------------------------------------------------
+
+
  // GRAPH CONSTANTS (for OLED #2: graphing the last 30 min data)
- // ---------------------------------------------------------------------
  static const int GRAPH_LEFT   = 20; 
  static const int GRAPH_RIGHT  = 127; 
  static const int GRAPH_TOP    = 9;  
@@ -214,9 +206,9 @@
    return (int)(y + 0.5f);
  }
  
- // ---------------------------------------------------------------------
+
+
  // WEB HANDLERS
- // ---------------------------------------------------------------------
  
  // Handler to set the target temperature from the browser
  void handleSetTarget() {
@@ -237,7 +229,7 @@
      server.send(400, "text/plain", "Missing 'temp' parameter!");
    }
  }
- 
+
  // Main webpage handler: Displays system status and sensor readings.
  void handleRoot() 
  {
@@ -498,9 +490,8 @@
  }
  
  
- // ---------------------------------------------------------------------
+
  // SETUP
- // ---------------------------------------------------------------------
  void setup()
  {
    Serial.begin(115200);  // Start serial communication for debugging
@@ -515,9 +506,7 @@
      while(true);
    }
  
-   // ---------------
    // WiFi Selection
-   // ---------------
    pinMode(BUTTON_1, INPUT_PULLUP);
    pinMode(BUTTON_2, INPUT_PULLUP);
  
@@ -651,7 +640,6 @@
  
    Wire.begin(); // Start I2C for OLEDs and SHT30
  
-   // --- NEW: SHT30 begin ---
    // Try to initialize the SHT30 sensor at its default address (0x44); if it fails, try 0x45.
    if(!sht3x.begin(0x44)) { 
      Serial.println("SHT30 not found at 0x44? Trying 0x45...");
@@ -708,9 +696,9 @@
    Serial.println("ESP32 setup complete.");
  }
  
- // ---------------------------------------------------------------------
+
+
  // LOOP
- // ---------------------------------------------------------------------
  void loop()
  {
    // Process any incoming web requests
@@ -764,6 +752,7 @@
      dewPointF = -999.0;
    }
  
+
    // --- AUTO MODE BUTTON HANDLING ---
    // Read the auto button state
    bool currentAutoButtonState = digitalRead(BUTTON_2);
@@ -811,10 +800,9 @@
      lastSampleTime = now;
    }
  
-   // -----------------------
+
    // OLED #1: Display the target and current DS18B20 temperature,
    // plus the lock status, auto mode indicator, and heater state.
-   // -----------------------
    display1.clearDisplay();
    // Draw a vertical divider between the left (target) and right (current) sections
    display1.drawLine(59, 0, 59, 33, WHITE);
@@ -866,9 +854,8 @@
    display1.display();
  
  
-   // -----------------------
+   
    // OLED #2: Display the last 30 minutes of temperature history as a graph.
-   // -----------------------
    display2.clearDisplay();
    display2.setTextSize(1);
    display2.setCursor(20, 0);
