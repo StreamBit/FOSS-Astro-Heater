@@ -48,9 +48,11 @@ Note: *All GPIO pins refer to the ESP32*
 2. **Open in Arduino IDE:**  
    - Open `firmware.ino` in the Arduino IDE.
    - Connect your ESP32 board.
-   - **Important:** Use **ESP32 Board Manager version 2.0.14**. Later versions may contain I2C issues affecting the OLED displays.
+   - **Important:** Use ESP32 Board Manager ***version 2.0.14***. Later versions may contain I2C issues affecting the OLED displays.
 3. **Install Libraries:**  
    Ensure all libraries referenced at the top of `firmware.ino` are installed in your Arduino IDE.
+4. **Update WiFi Credentials:**  
+   If connecting heater to WiFi network, update the credentials in the firmware before uploading to your ESP32. Set `ssis` and `password` at top of script to *your* SSID and Password.
 4. **Compile and Upload:**  
    Compile and upload the firmware to your ESP32.
 
@@ -60,7 +62,7 @@ Note: *All GPIO pins refer to the ESP32*
 ### Basic Operation
 Wrap the heater band around your scope, placing the temperature probe inside the band touching the scope body.
 
-Power on your dew heater by plugging it into a 5V 2A USB source — the screens should illuminate. After the splash screen, you may select a target temperature with the pot from 0-100°f. 
+Power on your dew heater by plugging it into a 5V 2A USB source — the screens should illuminate. After the splash screens, you may select a target temperature with the pot from 0-100°f. 
 
 The heater will being to warm until the temp probe reaches the target temperature. Once the temp falls back below the target, the heater will kick on again.
 
@@ -71,12 +73,17 @@ Depending on your specific setup, the potentiometer reading may fluctuate as the
 
 To change the target temp, press the lockout button again to toggle the lock.
 
+### Webpage
+While powered on and connected to WiFi, the heater will output a webpage at the IP address displayed during startup. Navigate to this address using another device to view current/target temperature, set a new target temp (while the device is locked), and view a 6hr temp graph.
+
+*Note*: Don't forget to set your SSID and Password in the firmware *before* flashing to your ESP32.
+
 
 ## FAQ
 
 <details>
   <summary><strong>Really? $300 for a Proprietary Dew Heater??</strong></summary>
-  <p>Ok, maybe I fudged a bit there — but at the time of writing the <em>Pegasus DewMaster 2</em> is $279 below VAT and Shipping costs, and that's before buying the actual heating bands as well.
+  <p>Ok, maybe I fudged a bit there — but at the time of writing the <em>Pegasus DewMaster 2</em> is $279 before VAT and Shipping costs, and that's also before buying the actual heating bands as well.
   
   Now, this current setup doesn't do <em>quite</em> as much as the <em>DewMaster</em>, but it is a <strong>whole</strong> lot cheaper. I built my personal setup for ~$50, and you could do it cheaper if you got better deals or already had some of the parts.
   
@@ -130,9 +137,6 @@ To change the target temp, press the lockout button again to toggle the lock.
 
 
 ## Potential Features & Fixes
-
-- **WiFi Integration:**  
-  Enable remote monitoring of board statistics.
 
 - **Ambient Temperature and Humidity Sensors:**  
   Support additional sensors to display ambient conditions and calculate dew point.
