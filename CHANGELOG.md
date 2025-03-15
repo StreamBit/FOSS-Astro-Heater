@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file.
 
+## [v3.0.0] - 2025-03-14
+### Updates
+- Added support for secondary button
+- Added SHT30 sensor for ambient temperature and humidity
+- Added toggle for WiFi mode upon startup
+- Added `auto` mode for automatically setting target temperature
+- Updated README to reflect changes
+### Fixed
+
 ## [v2.0.0] - 2025-03-14
 ### Updates
 - Added WiFi support

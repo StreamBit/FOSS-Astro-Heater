@@ -16,10 +16,11 @@ This dew heater takes user input from a dial and keeps the heater band at a cont
 | **128x64 I2C OLED Display (x2)** | I used two SSD1306's<br>Make sure one can be running on IIC Address 0x3C and the other is on 0x3D |
 | **Heater Band**               | Just find the cheapest 10W heater band available to you; no controller required |
 | **10kΩ Potentiometer**        | - |
-| **Momentary Button**          | - |
+| **Momentary Button (x2)**          | - |
 | **10kΩ Resistor**             | - |
 | **220Ω Resistor**             | - |
 | **Male/Female USB plugs (optional)** | If you don't want to use plugs, you can hardwire the heater and power USBs directly to the ESP32 |
+| **SHT30** | Ambient temp/humidity sensor |
 
 
 
@@ -33,10 +34,12 @@ Assemble the pieces on a breadboard or blank PCB using the below wiring:
 | DS18B20 Sensor   | Data -> GPIO 4, VCC -> 3.3V, GND -> GND |
 | Potentiometer    | Output -> GPIO 34 |
 | Heater Power     | MOSFET Drain -> Heater(-), Heater(+) to 5V Source |
-| Button Switch    | GPIO 13 |
+| Button 1    | GPIO 13 |
 | 220Ω Resistor | MOSFET Gate -> Resistor -> GPIO26 |
 | 10kΩ Resistor | MOSFET Source -> Resistor -> MOSFET Drain |
 | ESP32 | 5V source -> 5V pin, GND source -> GND pin |
+| Button 2 | GPIO 12 |
+| SHT30 | SDA -> GPIO 21, SCL -> GPIO 22 |
 
 Note: *All GPIO pins refer to the ESP32*
 
@@ -62,7 +65,11 @@ Note: *All GPIO pins refer to the ESP32*
 ### Basic Operation
 Wrap the heater band around your scope, placing the temperature probe inside the band touching the scope body.
 
-Power on your dew heater by plugging it into a 5V 2A USB source — the screens should illuminate. After the splash screens, you may select a target temperature with the pot from 0-100°f. 
+Power on your dew heater by plugging it into a 5V 2A USB source — the screens should illuminate.
+
+Enable/Disable WiFi using on screen prompts. If WiFi is enabled, wait for the ESP32 to connect and then note the displayed IP address.
+
+After the splash screens, you may select a target temperature with the pot from 0-100°f. 
 
 The heater will being to warm until the temp probe reaches the target temperature. Once the temp falls back below the target, the heater will kick on again.
 
@@ -73,8 +80,11 @@ Depending on your specific setup, the potentiometer reading may fluctuate as the
 
 To change the target temp, press the lockout button again to toggle the lock.
 
+### Automatic Mode
+While the target temp is locked, you may press the secondary button to engage automatic mode. In auto mode, the ESP32 will read the ambient temperature and humidity to determin the dew point. The target temp will then be set to 3 degrees above the dew point.
+
 ### Webpage
-While powered on and connected to WiFi, the heater will output a webpage at the IP address displayed during startup. Navigate to this address using another device to view current/target temperature, set a new target temp (while the device is locked), and view a 6hr temp graph.
+While powered on and connected to WiFi, the heater will output a webpage at the IP address displayed during startup. Navigate to this address using another device to view current/target temperature, set a new target temp (while the device is locked), toggle auto mode remotely, and view a 6hr temp graph.
 
 *Note*: Don't forget to set your SSID and Password in the firmware *before* flashing to your ESP32.
 
@@ -113,8 +123,6 @@ While powered on and connected to WiFi, the heater will output a webpage at the 
   <summary><strong>I have a great idea for this project which needs to be added!</strong></summary>
   <p>That's great! That's the beauty of FOSS, feel free to make a fork of this project and get working on it!  :)
   
-  If you want to collab on the main branch, make a pull request with your changes and I'll take a look.
-  
   If you just have a feature you'd like to request, make an issue report and tag it as `feature request`.</p>
 </details>
 
@@ -138,17 +146,16 @@ While powered on and connected to WiFi, the heater will output a webpage at the 
 
 ## Potential Features & Fixes
 
-- **Ambient Temperature and Humidity Sensors:**  
-  Support additional sensors to display ambient conditions and calculate dew point.
-
-- **Automatic Mode:**  
-  Automatically adjust the target temperature based on sensor data.
-
 - **Settings Menu:**  
-  Include a settings menu to adjust defaults, view IP addresses, toggle WiFi, etc.
+  Include a settings menu to adjust defaults, view IP addresses, toggle automatic mode temp delta, etc.
 
 - **Error Handling:**  
   Current code returns an error when the temp probe is not connected or probe is misread. In an error state, heater is automatically on. Add toggle to adjust default heater state.
+
+- **Celsius/Fahrenheit Toggle**
+
+- **WiFi Access Point:**  
+  Add a mode for ESP32 to broadcast its own network when nearby WiFi is unavailable.
 
 
 ## Troubleshooting
