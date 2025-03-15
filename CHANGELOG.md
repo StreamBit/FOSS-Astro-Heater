@@ -2,8 +2,14 @@
 
 All notable changes to this project will be documented in this file.
 
+## [v3.0.1] - 2025-03-14
+### Updated
+- Tweaked display layouts
+### Fixed
+- Fixed starfield splash screen randomizer
+
 ## [v3.0.0] - 2025-03-14
-### Updates
+### Updated
 - Added support for secondary button
 - Added SHT30 sensor for ambient temperature and humidity
 - Added toggle for WiFi mode upon startup
@@ -12,7 +18,7 @@ All notable changes to this project will be documented in this file.
 ### Fixed
 
 ## [v2.0.0] - 2025-03-14
-### Updates
+### Updated
 - Added WiFi support
 - Added splash screen to display IP address
 - Added webpage with temp readouts and graph
